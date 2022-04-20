@@ -186,7 +186,7 @@ $ ls --human-readable --size -1 -S --classify # 按文件大小排序
 $ du -sh * | sort -h # 按文件大小排序(同上)
 ```
 
-显示当前目录下包括影藏文件在内的所有文件列表
+显示当前目录下包括隐藏文件在内的所有文件列表
 
 ```shell
 [root@localhost ~]# ls -a
@@ -426,4 +426,4 @@ auto  CHANGES  CHANGES.ru  conf  configure  contrib  html  LICENSE  Makefile  ma
 * 黄色：设备文件
 * 青黄色：管道文件
 
-<!-- Linux命令行搜索引擎：https://jaywcjlove.github.io/linux-command/ -->
+

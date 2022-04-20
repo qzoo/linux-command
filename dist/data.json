@@ -1107,7 +1107,7 @@
   "ipcs": {
     "n": "ipcs",
     "p": "/ipcs",
-    "d": "分析消息队列共享内存和信号量 "
+    "d": "分析消息队列共享内存和信号量"
   },
   "iperf": {
     "n": "iperf",
@@ -1163,6 +1163,11 @@
     "n": "join",
     "p": "/join",
     "d": "两个文件中指定栏位内容相同的行连接起来"
+  },
+  "journalctl": {
+    "n": "journalctl",
+    "p": "/journalctl",
+    "d": "检索 systemd 日志，是 CentOS 7 才有的工具。"
   },
   "jq": {
     "n": "jq",
@@ -1602,7 +1607,7 @@
   "nc": {
     "n": "nc",
     "p": "/nc",
-    "d": "用于设置路由器，是网络工具中的瑞士军刀"
+    "d": "用于设置路由器，是网络工具中的瑞士军刀。"
   },
   "ncftp": {
     "n": "ncftp",
@@ -2434,9 +2439,9 @@
     "p": "/tee",
     "d": "从标准输入读取数据并重定向到标准输出和文件。"
   },
-  "telint": {
-    "n": "telint",
-    "p": "/telint",
+  "telinit": {
+    "n": "telinit",
+    "p": "/telinit",
     "d": "切换当前正在运行系统的运行等级"
   },
   "telnet": {
@@ -2463,6 +2468,11 @@
     "n": "time",
     "p": "/time",
     "d": "统计给定命令所花费的总时间"
+  },
+  "timedatectl": {
+    "n": "timedatectl",
+    "p": "/timedatectl",
+    "d": "用于在 Linux 中设置或查询系统时间、日期和时区等配置。"
   },
   "times": {
     "n": "times",
@@ -2592,7 +2602,7 @@
   "unrar": {
     "n": "unrar",
     "p": "/unrar",
-    "d": "解压rar文件命令，从rar档案中提取文件"
+    "d": "解压rar文件命令，从 rar 压缩包中提取文件"
   },
   "unset": {
     "n": "unset",

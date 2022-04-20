@@ -3,15 +3,7 @@ import path from 'path';
 import stylus from 'stylus';
 import * as ejs from 'ejs';
 import UglifyJS from 'uglify-js';
-import { unified } from 'unified';
-import rehypeAttrs from 'rehype-attr';
-import * as rehypePrism from '@mapbox/rehype-prism';
-import rehypeRaw from 'rehype-raw';
-import rehypeSlug from 'rehype-slug';
-import rehypeAutolinkHeadings from 'rehype-autolink-headings';
-import stringify from 'rehype-stringify';
-import remarkParse from 'remark-parse';
-import remark2rehype from 'remark-rehype';
+import { create } from 'markdown-to-html-cli';
 import _ from 'colors-cli/toxic.js';
 
 const deployDir = path.resolve(process.cwd(), '.deploy');
@@ -20,6 +12,7 @@ const rootIndexJSPath = path.resolve(process.cwd(), 'template', 'js', 'index.js'
 const dataJsonPath = path.resolve(process.cwd(), 'dist', 'data.json');
 const dataJsonMinPath = path.resolve(process.cwd(), 'dist', 'data.min.json');
 const cssPath = path.resolve(deployDir, 'css', 'index.css');
+const contributorsPath = path.resolve(process.cwd(), 'CONTRIBUTORS.svg');
 
 ;(async () => {
   try {
@@ -30,6 +23,11 @@ const cssPath = path.resolve(deployDir, 'css', 'index.css');
     await FS.ensureDir(path.resolve(deployDir, 'css'));
     await FS.ensureDir(path.resolve(deployDir, 'c'));
     await FS.copySync(faviconPath, path.resolve(deployDir, 'img', 'favicon.ico'));
+    
+    await FS.copyFile(path.resolve(process.cwd(), 'template', 'js', 'copy-to-clipboard.js'), path.resolve(deployDir, 'js', 'copy-to-clipboard.js'));
+    await FS.copyFile(path.resolve(process.cwd(), 'node_modules/@wcj/dark-mode/main.js'), path.resolve(deployDir, 'js', 'dark-mode.min.js'));
+    await FS.copyFile(path.resolve(process.cwd(), 'node_modules/@uiw/github-corners/lib/index.js'), path.resolve(deployDir, 'js', 'github-corners.js'));
+
     const jsData = await FS.readFileSync(rootIndexJSPath);
     await FS.outputFile(path.resolve(deployDir, 'js', 'index.js'), UglifyJS.minify(jsData.toString()).code)
     const files = await readMarkdownPaths(path.resolve(process.cwd(), 'command'));
@@ -77,6 +75,24 @@ const cssPath = path.resolve(deployDir, 'css', 'index.css');
         d: '最专业的Linux命令大全，命令搜索引擎，内容包含Linux命令手册、详解、学习，值得收藏的Linux命令速查手册。',
         arr: jsonData.data,
         command_length: jsonData.data.length
+      }
+    );
+
+    let svgStr = '';
+    if (FS.existsSync(contributorsPath)) {
+      svgStr = (await FS.readFile(contributorsPath)).toString();
+    }
+
+    await createTmpToHTML(
+      path.resolve(process.cwd(), 'template', 'contributors.ejs'),
+      path.resolve(deployDir, 'contributors.html'),
+      {
+        p: '/contributors.html',
+        n: '搜索',
+        d: '最专业的Linux命令大全，命令搜索引擎，内容包含Linux命令手册、详解、学习，值得收藏的Linux命令速查手册。',
+        arr: jsonData.data,
+        command_length: jsonData.data.length,
+        contributors: svgStr,
       }
     );
     
@@ -166,42 +182,33 @@ const cssPath = path.resolve(deployDir, 'css', 'index.css');
  function createTmpToHTML(fromPath, toPath, desJson, mdPath) {
   return new Promise(async (resolve, reject) => {
     try {
-      let relative_path = '';
       const current_path = toPath.replace(new RegExp(`${deployDir}`), '');
       const tmpStr = await FS.readFile(fromPath);
       let mdPathName = '';
+      let mdhtml = '';
+      let relative_path = '';
       if (mdPath) {
         // CSS/JS 引用相对地址
         relative_path = '../';
         mdPathName = `/command/${desJson.n}.md`;
+        const READMESTR = await FS.readFile(path.resolve(mdPath, `${desJson.n}.md`));
+        mdhtml = await markdownToHTML(READMESTR.toString());
       }
       // 生成 HTML
       let html = ejs.render(tmpStr.toString(), {
         filename: fromPath,
         relative_path, // 当前文件相对于根目录的相对路径
         md_path: mdPathName || '',  // markdown 路径
+        mdhtml: mdhtml || '',
         current_path,   // 当前 html 路径
         describe: desJson ? desJson : {},   // 当前 md 的描述
-      }, { filename: fromPath });
+      }, {
+        filename: fromPath
+      });
 
-      if (mdPath) {
-        const READMESTR = await FS.readFile(path.resolve(mdPath, `${desJson.n}.md`));
-        const mdhtml = await markdownToHTML(READMESTR.toString());
-        html = html.replace(/{{content}}/, mdhtml);
-        await FS.outputFile(toPath, html);
-        console.log(`  ${'♻️ →'.green} ${toPath.replace(process.cwd(), '')}`);
-        // marked(READMESTR.toString(), (err, mdhtml) => {
-        //   if (err) return reject(err);
-        //   html = html.replace(/{{content}}/, mdhtml);
-        //   FS.outputFileSync(toPath, html);
-        //   console.log(`  ${'→'.green} ${toPath.replace(process.cwd(), '')}`);
-        //   resolve(html);
-        // });
-      } else {
-        await FS.outputFile(toPath, html);
-        console.log(`  ${'→'.green} ${toPath.replace(process.cwd(), '')}`);
-        resolve(html);
-      }
+      await FS.outputFile(toPath, html);
+      console.log(`  ${'♻️  →'.green} ${path.relative(process.cwd(), toPath)}`);
+      resolve();
     } catch (err) {
       reject(err);
     }
@@ -209,17 +216,7 @@ const cssPath = path.resolve(deployDir, 'css', 'index.css');
 }
 
 function markdownToHTML(str) {
-  return unified()
-    .use(remarkParse)
-    .use(remark2rehype, { allowDangerousHtml: true })
-    .use(rehypeRaw)
-    .use(rehypeSlug)
-    .use(rehypeAutolinkHeadings)
-    .use(rehypePrism.default)
-    .use(rehypeAttrs, { properties: 'attr' })
-    .use(stringify)
-    .processSync(str)
-    .toString()
+  return create({ markdown: str, document: undefined, 'dark-mode': false });
 }
 
 /**
@@ -236,7 +233,7 @@ function markdownToHTML(str) {
         .set('compress', true)
         .render((err, css) => {
           if (err) throw err;
-          resolve(css);
+          resolve(`${css}`);
         });
     } catch (err) {
       reject(err);
