@@ -11,12 +11,13 @@
 [![Get this with npm](https://jaywcjlove.github.io/sb/ico/npm.svg)](https://www.npmjs.com/package/linux-command)
 [![NPM Download](https://img.shields.io/npm/dm/linux-command.svg?style=flat)](https://www.npmjs.com/package/linux-command)
 [![jsdelivr cdn](https://data.jsdelivr.com/v1/package/npm/linux-command/badge)](https://www.jsdelivr.com/package/npm/linux-command)
+[![Docker Image Size (latest by date)](https://img.shields.io/docker/image-size/wcjiang/linux-command?logo=docker)](https://hub.docker.com/r/wcjiang/linux-command)
 
 当前仓库搜集了 570 多个 Linux 命令，是一个非盈利性的仓库，生成了一个 web 网站方便使用，目前网站没有任何广告，内容包含 Linux 命令手册、详解、学习，内容来自网络和网友的补充，非常值得收藏的 Linux 命令速查手册。版权归属原作者，对任何法律问题及风险不承担任何责任，没有任何商业目的，如果认为侵犯了您的版权，请来信告知。我不能完全保证内容的正确性。通过使用本站内容带来的风险与我无关。当使用本站时，代表您已接受了本站的使用条款和隐私条款。
 
-[Web](#web-版本) | [微信小程序](#微信小程序版本) | [Dash](#dash-版本) | [Raycast](#raycast-版本) | [Alfred](#alfred-版本) | [KDE/Krunner](https://github.com/roachsinai/krunner-linuxcommands) | [Android](https://github.com/Ernest-su/LinuxCmd.git) | [Mac/Win/Linux](https://github.com/haloislet/linux-command) | [Chrome Plugin](#chrome-插件) | [命令行工具](#命令行工具)
+[Web](#web-版本) | [微信小程序](#微信小程序版本) | [Dash](#dash-版本) | [Raycast](#raycast-版本) | [Alfred](#alfred-版本) | [KDE/Krunner](https://github.com/roachsinai/krunner-linuxcommands) | [Android](https://github.com/Ernest-su/LinuxCmd.git) | [Mac/Win/Linux](https://github.com/haloislet/linux-command) | [Chrome Plugin](#chrome-插件) | [命令行工具](#命令行工具) | [Docker](#docker)
 
-### Web 版本
+## Web 版本
 
 [Github Web](http://jaywcjlove.github.io/linux-command/) | [Gitee Web](http://jaywcjlove.gitee.io/linux-command/) | [Githack](https://raw.githack.com/jaywcjlove/linux-command/gh-pages/index.html) | [Statically](https://cdn.statically.io/gh/jaywcjlove/linux-command/gh-pages/index.html)
 
@@ -30,19 +31,26 @@
 
 [![Linux 命令大全](https://user-images.githubusercontent.com/1680273/123261829-ce830300-d529-11eb-8cea-a39059b972dd.gif)](https://jaywcjlove.github.io/linux-command/)
 
-你可以随意部署 web 版，这非常简单，只需要克隆 [`gh-pages`](https://github.com/jaywcjlove/linux-command/tree/gh-pages) 分支代码到你的静态服务就可以了。你也可以将 [`command`](https://github.com/jaywcjlove/linux-command/tree/master/command) 目录中的 Markdown 文件拿去自己生成 HTML。
+你可以随意部署 web 版，这非常简单，只需要克隆 [`gh-pages`](https://github.com/jaywcjlove/linux-command/tree/gh-pages) 分支代码到你的静态服务就可以了。你也可以将 [`command`](https://github.com/jaywcjlove/linux-command/tree/master/command) 目录中的 Markdown 文件拿去自己生成 HTML。还可以使用下方 docker 方法部署 web 版。
 
 ⚠️ 你们拿过去部署的静态网站，还是希望挂个 GitHub 地址，这样大家共同维护命令文档，让文档更加完善，更加丰富，当然你删除本站所有信息相关信息，其实我也不太在意，默认允许你们随意搞，我不负任何负责。如果您也部署了一份，可以将网址放到下面 :)。
 
-[`linux.devonline.net`](http://linux.devonline.net/)，[`linux.ftqq.com`](https://linux.ftqq.com/)，[`linux.gaomeluo.com`](https://linux.gaomeluo.com)，[`atoolbox.net`](http://www.atoolbox.net/Tool.php?Id=826)，[`xiaoshanseo.com`](https://tools.xiaoshanseo.com/Tools/linux-command/)，[`262235.xyz`](https://262235.xyz/linux-command/)，[`cmsblogs.cn`](https://linux.cmsblogs.cn/)，[`loquy.cn`](https://www.loquy.cn/linux-command/)，[`bqrdh.com`](https://tools.bqrdh.com/linux-command/)，[`buyao.vip`](https://demo.buyao.vip/linux/)，[`hezhiqiang.gitbook.io`](https://hezhiqiang.gitbook.io/linux/)，[`linux.mmoke.com`](https://linux.mmoke.com), [`luojianjun.cn`](https://luojianjun.cn/linux-command/)
+**推荐使用的镜像 web 版本**
 
-### 微信小程序版本
+[**`qq.wdev.cn`**](https://qq.wdev.cn)
+[**`linux.devonline.net`**](http://linux.devonline.net/)，[**`man.zch.ooo`**](https://man.zch.ooo/)，[**`linux.mmoke.com`**](https://linux.mmoke.com)，[**`bqrdh.com`**](https://tools.bqrdh.com/linux-command/)
+
+**其它 web 版本**
+
+[`linux.ftqq.com`](https://linux.ftqq.com/)，[`linux.gaomeluo.com`](https://linux.gaomeluo.com)，[`atoolbox.net`](http://www.atoolbox.net/Tool.php?Id=826)，[`xiaoshanseo.com`](https://tools.xiaoshanseo.com/Tools/linux-command/)，[`262235.xyz`](https://262235.xyz/linux-command/)，[`cmsblogs.cn`](https://linux.cmsblogs.cn/)，[`loquy.cn`](https://www.loquy.cn/linux-command/)，[`buyao.vip`](https://demo.buyao.vip/linux/)，[`hezhiqiang.gitbook.io`](https://hezhiqiang.gitbook.io/linux/), [`luojianjun.cn`](https://luojianjun.cn/linux-command/)
+
+## 微信小程序版本
 
 微信小程序版本，由 [**@Matz Yang**](https://github.com/MatzYang) 提供 [#260](https://github.com/jaywcjlove/linux-command/issues/260)。
 
 <img width="180" src="https://user-images.githubusercontent.com/1445225/123251478-d50b7d80-d51d-11eb-80e4-01e18212fc4d.png" />
 
-### Chrome 插件
+## Chrome 插件
 
 可在[源码仓库](https://github.com/jaywcjlove/oscnews)预览效果，[Github下载 crx 文件安装](https://github.com/jaywcjlove/oscnews/releases) 或者[开源中国下载 crx 文件安装](https://gitee.com/jaywcjlove/oscnews/releases) 也可通过 Chrome Web Store 下载：
 
@@ -55,7 +63,7 @@
 
 </details>
 
-### Raycast 版本
+## Raycast 版本
 
 [Raycast 版本安装](https://www.raycast.com/jaywcjlove/linux-command)， ([**#338**](https://github.com/jaywcjlove/linux-command/issues/338))下图是界面效果： 
 
@@ -73,7 +81,7 @@
 </details>
 
 
-### Alfred 版本
+## Alfred 版本
 
 [Alfred 版本下载](https://github.com/jaywcjlove/linux-command/releases)， 下图是界面效果。 
 
@@ -84,9 +92,9 @@
 
 </details>
 
-### Dash 版本
+## Dash 版本
 
-由 [**@SHANG殇**](https://github.com/xinshangshangxin) 提供的 `Dash` 版本 [#91](https://github.com/jaywcjlove/linux-command/pull/91)，可配合 `alfred` 玩耍，下载 [linux-command.docset.zip](https://jaywcjlove.github.io/linux-command/linux-command.docset.zip) 文件解压，点击安装即可。
+由 [**@SHANG殇**](https://github.com/xinshangshangxin) 提供的 `Dash` 版本 [#91](https://github.com/jaywcjlove/linux-command/pull/91)，可配合 `alfred` 玩耍，下载 [linux-command.docset.tgz](https://github.com/jaywcjlove/linux-command/releases) 文件解压，点击安装即可。
 
 
 <details>
@@ -96,7 +104,7 @@
 
 </details>
 
-### Android 版本
+## Android 版本
 
 [Android 版本下载](https://github.com/Ernest-su/LinuxCmd/releases)， 下图是界面效果。 
 
@@ -109,11 +117,37 @@
 
 </details>
 
-### 命令行工具
+## 命令行工具
 
 - [`@chenjiandongx/how`](https://github.com/chenjiandongx/how) Python 版 [#129](https://github.com/jaywcjlove/linux-command/issues/129)，由 [**@陈键冬**](https://github.com/chenjiandongx) 提供。
 - [`@chenjiandongx/pls`](https://github.com/chenjiandongx/pls) Golang 版 [#129](https://github.com/jaywcjlove/linux-command/issues/129)，由 [**@陈键冬**](https://github.com/chenjiandongx) 提供。
 
+
+## Docker
+
+[![Docker Image Version (latest by date)](https://img.shields.io/docker/v/wcjiang/linux-command?logo=docker)](https://hub.docker.com/r/wcjiang/linux-command) [![Docker Image Size (latest by date)](https://img.shields.io/docker/image-size/wcjiang/linux-command?logo=docker)](https://hub.docker.com/r/wcjiang/linux-command) [![Docker Pulls](https://img.shields.io/docker/pulls/wcjiang/linux-command?logo=docker)](https://hub.docker.com/r/wcjiang/linux-command)
+
+轻松通过 docker 部署 linux-command 网站。
+
+```bash
+docker pull wcjiang/linux-command
+# Or
+docker pull ghcr.io/jaywcjlove/linux-command:latest
+```
+
+```bash
+docker run --name linux-command --rm -d -p 9665:3000 wcjiang/linux-command:latest
+# Or
+docker run --name linux-command -itd -p 9665:3000 wcjiang/linux-command:latest
+# Or
+docker run --name linux-command -itd -p 9665:3000 ghcr.io/jaywcjlove/linux-command:latest
+```
+
+在浏览器中访问以下 URL
+
+```bash
+http://localhost:9665/
+```
 
 ## 目录
 
